@@ -37,3 +37,9 @@ form.addEventListener('submit', handleFormSubmit);
 chrome.storage.local.get("lessonname", function(data) {
     form.elements["Lesson Name"].value = data.lessonname
 });
+
+chrome.storage.local.get("blockname", function(data) {
+   console.log(data.blockname)
+  form.elements["Block Name"].value = data.blockname
+});
+
