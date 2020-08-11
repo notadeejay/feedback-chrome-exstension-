@@ -1,7 +1,8 @@
 import "../css/popup.css";
-import hello from "./popup/example";
+
 
 import {create} from './airtable_db'
+
 
 
 const isValidElement = element => {
@@ -32,3 +33,7 @@ const isValidElement = element => {
 
 const form = document.getElementById('feedback-form')
 form.addEventListener('submit', handleFormSubmit);
+
+chrome.storage.local.get("lessonname", function(data) {
+    form.elements["Lesson Name"].value = data.lessonname
+});
