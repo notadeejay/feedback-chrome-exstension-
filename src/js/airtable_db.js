@@ -3,8 +3,12 @@ import secrets from "secrets";
 
 const BASE_ID = secrets.APP_ID
 const API_KEY = secrets.API_KEY
-const tableName = "Python"
-export function create(form) {
+const config = {
+  headers: { 'Authorization': `Bearer ${API_KEY}` }
+};
+
+function create(form) {
+  const tableName = "Python"
    let date = new Date()
     let data = { 
       "records": [{
@@ -16,7 +20,6 @@ export function create(form) {
     data["records"][0]["fields"]["Date Reviewed"] = date.toISOString().substring(0, 10);
     data["records"][0]["fields"]["Status"] = "Todo"
 
-  
     const config = {
        headers: { 'Authorization': `Bearer ${API_KEY}` }
     };
@@ -40,3 +43,14 @@ export function create(form) {
       }
     });
   }
+
+function getLabels () {
+  const tableName = "Sections"
+  let url = `https://api.airtable.com/v0/${BASE_ID}/${tableName}`
+  return axios.get(url, config)
+
+}
+
+
+
+export {create, getLabels};

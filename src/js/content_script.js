@@ -12,32 +12,31 @@
       chrome.storage.local.set({lessonname: link});  
     }
 
-    const getBlockName = () => {
-      let htmlBlock = e.target.closest('.block--edit-mode')
-      let blockName = htmlBlock.querySelector('h1').innerText
-      chrome.storage.local.set({blockname: blockName}); 
+    function getBlockName(e, header){
+      chrome.storage.local.set({blockname: header}); 
     }
 
-    const setBlockName = () =>{
-      let contentBlocks = document.querySelectorAll('.cke_editable')
-      for (let i = 0; i < contentBlocks.length; i++) {
-        contentBlocks[i].onfocus= function() {
-          getBlockName()
-        }
-    }
-      
-      
-    }
-    
-    document.onreadystatechange = function () {
-    if (document.readyState === 'complete') {
+    const addHeaderListener = () => {
       let links = document.getElementsByClassName('header-bar__tab-link')
       for(let i = 0; i < links.length; i++) {
         links[i].onclick = function(e) {updateLessonName(e)}
       }
-      setLessonName();
-      setBlockName();
-    
+    }
+
+    const addBlockListener = () => {
+      let section = document.getElementsByClassName('block html')
+      for(let i = 0; i < section.length; i++) {
+         let header = section[i].querySelector('h1').innerText
+          section[i].onclick = function(e) {getBlockName(e, header)}
+       }
+     }
+
+    document.onreadystatechange = function () {
+      if (document.readyState === 'complete') {
+        chrome.storage.local.set({blockname: "Block Name"});
+        addHeaderListener();
+        setLessonName();
+        window.setTimeout(addBlockListener, 8000);
     }
   }
  
