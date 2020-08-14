@@ -1,6 +1,9 @@
 "use strict";
 
-
+    const getText = () => {
+      let selection = window.getSelection().toString();
+      chrome.storage.local.set({content: selection}); 
+    }
     const setLessonName = () => {
       let header = document.getElementsByClassName('header-bar__tab--active')[0]
       let lessonName = header.querySelector('.header-bar__tab-title').innerText
@@ -14,7 +17,6 @@
     }
 
     function getBlockName(e, header){
-      console.log(header)
       chrome.storage.local.set({blockname: header}); 
     }
 
@@ -31,6 +33,9 @@
          let header = section[i].querySelector('h1').innerText
           section[i].onclick = function(e) {
             getBlockName(e, header)
+          }
+          section[i].onmouseup = function(e) {
+            getText();
           }
        }
      }

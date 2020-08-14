@@ -57,7 +57,11 @@ chrome.storage.local.get("lessonname", function(data) {
 });
 
 chrome.storage.local.get("blockname", function(data) {
-   console.log(data.blockname)
   form.elements["Block Name"].value = data.blockname
+});
+
+chrome.storage.local.get("content", function(data) {
+  console.log(data.content)
+ document.getElementById("highlighted").innerHTML= `<p>${data.content}</p>`
 });
 
