@@ -8,6 +8,7 @@ const config = {
 };
 
 function create(form) {
+  console.log(form)
   const tableName = "Python"
    let date = new Date()
     let data = { 

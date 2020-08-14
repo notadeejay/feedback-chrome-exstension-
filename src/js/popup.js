@@ -9,12 +9,10 @@ const setLabels = labelArr => {
   for(let i = 0; i < labelArr.length; i++) {
     selectHTML += (`<option value="Section ${labelArr[i]}"> Section ${labelArr[i]} </option>`)
   }
-   console.log(selectHTML)
     let selectForm = document.getElementById('selectform')
     selectForm.innerHTML = selectHTML
 }
   
- // document.getElementById("selectBox").innerHTML = selectHtml;
 getLabels().then(response => {
   let labels = response.data.records
   let newArr = []
@@ -34,7 +32,7 @@ const isValidElement = element => {
     if (isValidElement(element)) {
        console.log(element.name)
       if (element.name == "Label") {
-        data[element.name] = new Array(`Section ${element.value}`)
+        data[element.name] = new Array(element.value)
       } else {
       data[element.name] = element.value
       }
@@ -54,12 +52,12 @@ const isValidElement = element => {
 const form = document.getElementById('feedback-form')
 form.addEventListener('submit', handleFormSubmit);
 
-// chrome.storage.local.get("lessonname", function(data) {
-//     form.elements["Lesson Name"].value = data.lessonname
-// });
+chrome.storage.local.get("lessonname", function(data) {
+    form.elements["Lesson Name"].value = data.lessonname
+});
 
-// chrome.storage.local.get("blockname", function(data) {
-//    console.log(data.blockname)
-//   form.elements["Block Name"].value = data.blockname
-// });
+chrome.storage.local.get("blockname", function(data) {
+   console.log(data.blockname)
+  form.elements["Block Name"].value = data.blockname
+});
 
