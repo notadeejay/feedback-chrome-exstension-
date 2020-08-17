@@ -6,20 +6,9 @@
       let header = document.getElementsByClassName('header-bar__tab--active')[0]
       let lessonName = header.querySelector('.header-bar__tab-title').innerText
       chrome.storage.local.set({lessonname: lessonName});  
-      console.log(lessonName)
     }
     
-    function updateLessonName(e){
-      let link = e.target.closest('a').dataset.tip
-      chrome.storage.local.set({lessonname: link});  
-    }
-
-    const addHeaderListener = () => {
-      let links = document.getElementsByClassName('header-bar__tab-link')
-      for(let i = 0; i < links.length; i++) {
-        links[i].onclick = function(e) {updateLessonName(e)}
-      }
-    }
+  
 
     const getText = () => {
       let selection = window.getSelection().toString();
@@ -47,14 +36,17 @@
        }
      }
 
-    document.onreadystatechange = function () {
-      if (document.readyState === 'complete') {
-        addHeaderListener();
-        window.setTimeout(setLessonName, 8000);
-        window.setTimeout(addBlockListener, 8000);
-        chrome.storage.local.set({blockname: ""}); 
-    }
-  }
+
+     chrome.runtime.onMessage.addListener(request => {
+      if (request && request.type === 'page-rendered') {
+        setLessonName();
+      }
+      return Promise.resolve({response: "Hi from content script"});
+    });
+
+
+    
+
  
   
 

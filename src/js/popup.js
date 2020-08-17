@@ -1,7 +1,7 @@
 import "../css/popup.css";
-
-
 import {buildForm, getLabels} from './airtable_db'
+
+chrome.runtime.sendMessage({text: "popup opened"});
 
 const selected = e => {
   let currVal = document.getElementById('selectform').value

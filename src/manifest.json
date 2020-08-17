@@ -15,7 +15,7 @@
       "js": ["contentscript.bundle.js"]
     }],
     "permissions": [
-      "activeTab", "storage"
+      "activeTab", "storage", "webRequest", "webNavigation"
     ],
   "icons": {
     "128": "icon-128.png"
