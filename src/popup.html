@@ -2,16 +2,16 @@
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="src/popup.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
   </head>
   <body>
     <div id="popup">
+        <div class="nav"><img class="logo"src="img/logo.jpeg"></div>
         <form id="feedback-form">
             <input class="feedback-form__input" type="text" name="Lesson Name" value="" placeholder="Lesson Name">
             <input class="feedback-form__input" type="text" name="Block Name" value="" placeholder="Block Title">
-            <blockquote id="highlighted"></blockquote>
-            <label class="feedback-form__label" name="comments">Additional Comments</label>
-            <input class="feedback-form__input" type="text" name="Comments">
-            <label class="feedback-form__label" for="Label">Course Section Number:</label>
+            <textarea class="feedback-form__highight" type="text" name="Highlighted Text" id="highlighted"></textarea>
+            <textarea class="feedback-form__input" type="text" name="Comments" placeholder="Write Your Feedback Here"></textarea>
             <select id="selectform" class="feedback-form__select" type="text" name="Label"></select>
             <button class="feedback-form__button" type="submit">Send It!</button>
         </form>

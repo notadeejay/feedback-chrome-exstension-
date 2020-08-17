@@ -1,8 +1,12 @@
 import "../css/popup.css";
 
 
-import {create, getLabels} from './airtable_db'
+import {buildForm, getLabels} from './airtable_db'
 
+const selected = e => {
+  let currVal = document.getElementById('selectform').value
+  // need to loop through options and find matching val name to set it as selected.
+}
 
 const setLabels = labelArr => {
   let selectHTML = "";
@@ -11,6 +15,9 @@ const setLabels = labelArr => {
   }
     let selectForm = document.getElementById('selectform')
     selectForm.innerHTML = selectHTML
+    selectForm.onchange = function(e) {
+        selected(e)
+     }
 }
   
 getLabels().then(response => {
@@ -41,10 +48,9 @@ const isValidElement = element => {
   }, {});
   
   const handleFormSubmit = event => {
-  
     event.preventDefault();
     const data = formToJSON(form.elements)
-    create(data)
+    buildForm(data)
     
   };
 
@@ -62,6 +68,6 @@ chrome.storage.local.get("blockname", function(data) {
 
 chrome.storage.local.get("content", function(data) {
   console.log(data.content)
- document.getElementById("highlighted").innerHTML= `<p>${data.content}</p>`
+ document.getElementById("highlighted").value = data.content
 });
 

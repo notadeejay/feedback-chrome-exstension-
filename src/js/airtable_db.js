@@ -7,26 +7,42 @@ const config = {
   headers: { 'Authorization': `Bearer ${API_KEY}` }
 };
 
-function create(form) {
-  console.log(form)
+
+function getID(){
+  return new Promise(resolve => {
+    chrome.storage.local.get("blockid", function(data) {
+      resolve(data.blockid);
+    })
+  })
+}
+async function buildForm (form) {
+  let date = new Date()
+  let newRecord = { 
+    "records": [{
+      "fields" : {
+      }
+    }]
+  }
+  
+  newRecord["records"][0]["fields"] = form 
+  newRecord["records"][0]["fields"]["Date Reviewed"] = date.toISOString().substring(0, 10);
+  newRecord["records"][0]["fields"]["Status"] = "Todo"
+  newRecord["records"][0]["fields"]["Block ID"] = await getID();
+
+  create(newRecord)
+}
+
+function create(record) {
+  
   const tableName = "Python"
-   let date = new Date()
-    let data = { 
-      "records": [{
-        "fields" : {
-        }
-      }]
-    }
-    data["records"][0]["fields"] = form 
-    data["records"][0]["fields"]["Date Reviewed"] = date.toISOString().substring(0, 10);
-    data["records"][0]["fields"]["Status"] = "Todo"
+   
 
     const config = {
        headers: { 'Authorization': `Bearer ${API_KEY}` }
     };
   
     let url = `https://api.airtable.com/v0/${BASE_ID}/${tableName}`
-    axios.post(url, data, config)
+    axios.post(url, record, config)
     .then((response) => {
       // Success 🎉
       console.log(response);
@@ -54,4 +70,4 @@ function getLabels () {
 
 
 
-export {create, getLabels};
+export {buildForm, getLabels};
